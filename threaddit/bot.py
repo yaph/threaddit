@@ -50,7 +50,7 @@ def get_comments(submission, limit=None, threshold=0):
     More comment links are expanded if no limit is given this may take long.
     """
 
-    #submission.replace_more_comments(limit=limit, threshold=threshold)
+    submission.replace_more_comments(limit=limit, threshold=threshold)
     return praw.helpers.flatten_tree(submission.comments)
 
 

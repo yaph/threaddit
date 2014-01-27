@@ -26,6 +26,8 @@ for comment in comments:
     if comment.id in d[sub_id]['comment_ids'] or getattr(comment, 'body', None) is None:
         continue
 
+    print('Parsing comment %s' % comment.id)
+
     urls = re.findall(re_md_link, comment.body)
     if urls:
         urls = filter(lambda s: re.search(re_schema, s), urls)
@@ -35,6 +37,6 @@ for comment in comments:
 
     d[sub_id]['urls'].update(urls)
     d[sub_id]['comment_ids'].add(comment.id)
-    d.sync()
 
+d.sync()
 d.close()
