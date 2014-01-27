@@ -1,4 +1,4 @@
-threaddit
+Threaddit
 =========
 
-Reddit Bots to collect data from individual threads
+Reddit Bots to collect data from individual threads.
