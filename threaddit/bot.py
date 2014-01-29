@@ -2,8 +2,11 @@
 # ThreadditBot functions.
 
 from urlparse import urlparse
+from markdown.inlinepatterns import LINK_RE
 
 import argparse
+import re
+
 import praw
 
 
@@ -52,6 +55,16 @@ def get_comments(submission, limit=None, threshold=0):
 
     submission.replace_more_comments(limit=limit, threshold=threshold)
     return praw.helpers.flatten_tree(submission.comments)
+
+
+def extract_urls(md):
+    """Extract absolute URLs from markdown and return list of URLs."""
+
+    urls = re.findall(LINK_RE, md)
+    if urls:
+        urls = [u[7].strip() for u in urls]
+
+    return urls
 
 
 def test_get_submission_id_from_url():

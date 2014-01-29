@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 # Extracts URLs from a given Reddit thread.
 
-from bot import fetch_submission, get_comments
+from bot import fetch_submission, get_comments, extract_urls
 
-import re
 import shelve
 
-
-# Simple regex for markdown URLs.
-re_md_link = re.compile(r'\(([^\)]+)\)')
-re_schema = re.compile(r'https?://')
 
 submission = fetch_submission()
 comments = get_comments(submission)
@@ -26,12 +21,7 @@ for comment in comments:
     if comment.id in d[sub_id]['comment_ids'] or getattr(comment, 'body', None) is None:
         continue
 
-    print('Parsing comment %s' % comment.id)
-
-    urls = re.findall(re_md_link, comment.body)
-    if urls:
-        urls = filter(lambda s: re.search(re_schema, s), urls)
-
+    urls = extract_urls(comment.body)
     if not urls:
         continue
 
